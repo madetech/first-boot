@@ -1,0 +1,70 @@
+#!/bin/sh
+
+append_to_bashrc() {
+    echo "$1" >> ~/.bashrc
+}
+
+if ! command -v brew >/dev/null; then
+    echo "Installing Linuxbrew ..."
+
+    curl -fsSL 'https://raw.githubusercontent.com/Linuxbrew/install/master/install' | ruby
+
+    append_to_bashrc('export PATH="$HOME/.linuxbrew/bin:$PATH"')
+    append_to_bashrc('export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"')
+    append_to_bashrc('export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"')
+fi
+
+# Languages
+
+echo "Lets add some language, but first some version managers..."
+
+brew install rbenv
+brew install ruby-build
+
+append_to_bashrc('eval "$(rbenv init -)"')
+
+brew install nvm
+brew install npm
+
+append_to_bashrc('export NVM_DIR="$HOME/.nvm"')
+append_to_bashrc('  . "$(brew --prefix nvm)/nvm.sh"')
+
+echo 'Setting up Ruby'
+
+find_latest_ruby() {
+  rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
+}
+
+ruby_version="$(find_latest_ruby)"
+
+rbenv install -s "$ruby_version"
+
+echo 'Lets set up Vagrant now'
+
+sudo apt-get install virtualbox
+sudo apt-get install vagrant
+sudo apt-get install virtualbox-dkms
+
+cd ~
+
+git clone https://github.com/madetech/vagrant-dev.git
+
+cd ./vagrant-dev
+
+echo "$ruby_version" >> .ruby-version
+
+gem install bundler
+gem install librarian
+gem install librarian-chef
+
+librarian-chef install
+
+vagrant plugin install vagrant-omnibus
+
+vagrant up
+
+vagrant provision
+
+echo ''
+echo 'Now your good to go! And welcome to MadeTech'
+
