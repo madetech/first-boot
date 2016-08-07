@@ -10,6 +10,10 @@ This repository is heavily inspired by [Laptop by thoughtbot](https://github.com
 
 [ ] Find way to install Slack, LastPass, and Docker
 
+## Contributing
+
+All PRs should be checked using ShellCheck
+
 ## Credits
 
 ![made](https://s3-eu-west-1.amazonaws.com/made-assets/googleapps/google-apps.png)

@@ -9,9 +9,12 @@ if ! command -v brew >/dev/null; then
 
     curl -fsSL 'https://raw.githubusercontent.com/Linuxbrew/install/master/install' | ruby
 
-    append_to_bashrc('export PATH="$HOME/.linuxbrew/bin:$PATH"')
-    append_to_bashrc('export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"')
-    append_to_bashrc('export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"')
+    # shellcheck disable=SC2016
+    append_to_bashrc 'export PATH="$HOME/.linuxbrew/bin:$PATH"'
+    # shellcheck disable=SC2016
+    append_to_bashrc 'export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"'
+    # shellcheck disable=SC2016
+    append_to_bashrc 'export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"'
 fi
 
 # Languages
@@ -21,13 +24,16 @@ echo "Lets add some language, but first some version managers..."
 brew install rbenv
 brew install ruby-build
 
-append_to_bashrc('eval "$(rbenv init -)"')
+# shellcheck disable=SC2016
+append_to_bashrc 'eval "$(rbenv init -)"'
 
 brew install nvm
 brew install npm
 
-append_to_bashrc('export NVM_DIR="$HOME/.nvm"')
-append_to_bashrc('  . "$(brew --prefix nvm)/nvm.sh"')
+# shellcheck disable=SC2016
+append_to_bashrc 'export NVM_DIR="$HOME/.nvm"'
+# shellcheck disable=SC2016
+append_to_bashrc '  . "$(brew --prefix nvm)/nvm.sh"'
 
 echo 'Setting up Ruby'
 
@@ -45,11 +51,11 @@ sudo apt-get install virtualbox
 sudo apt-get install vagrant
 sudo apt-get install virtualbox-dkms
 
-cd ~
+cd ~ || exit
 
 git clone https://github.com/madetech/vagrant-dev.git
 
-cd ./vagrant-dev
+cd ./vagrant-dev || exit
 
 echo "$ruby_version" >> .ruby-version
 

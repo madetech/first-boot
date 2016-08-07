@@ -35,13 +35,16 @@ echo "Lets add some language, but first some version managers..."
 brew install rbenv
 brew install ruby-build
 
-append_to_bash_profile('eval "$(rbenv init -)"')
+# shellcheck disable=SC2016
+append_to_bash_profile 'eval "$(rbenv init -)"'
 
 brew install nvm
 brew install npm
 
-append_to_bash_profile('export NVM_DIR="$HOME/.nvm"')
-append_to_bash_profile('  . "$(brew --prefix nvm)/nvm.sh"')
+# shellcheck disable=SC2016
+append_to_bash_profile 'export NVM_DIR="$HOME/.nvm"'
+# shellcheck disable=SC2016
+append_to_bash_profile '  . "$(brew --prefix nvm)/nvm.sh"'
 
 echo 'Setting up Ruby'
 
@@ -55,11 +58,11 @@ rbenv install -s "$ruby_version"
 
 echo 'Lets set up Vagrant now'
 
-cd ~
+cd ~ || exit
 
 git clone https://github.com/madetech/vagrant-dev.git
 
-cd ./vagrant-dev
+cd ./vagrant-dev || exit
 
 echo "$ruby_version" >> .ruby-version
 
