@@ -8,7 +8,7 @@ This repository is heavily inspired by [Laptop by thoughtbot](https://github.com
 
 ##TODO
 
-[ ] Find way to install Slack, LastPass, and Docker
+[] Find way to install Slack, LastPass, and Docker onto Linux
 
 ## Contributing
 
