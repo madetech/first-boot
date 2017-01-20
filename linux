@@ -1,7 +1,16 @@
 #!/bin/sh
 
-append_to_bashrc() {
-    echo "$1" >> ~/.bashrc
+append_to_shell_rc() {
+  if echo "$SHELL" | grep -q 'zsh'
+  then
+    file=~/.zshrc
+  elif echo "$SHELL" | grep -q 'fish'
+  then
+    file=~/.config/fish/config.fish
+  else
+    file=~/.bashrc
+  fi
+  echo "$1" >> $file
 }
 
 if ! command -v brew >/dev/null; then
@@ -10,11 +19,11 @@ if ! command -v brew >/dev/null; then
     curl -fsSL 'https://raw.githubusercontent.com/Linuxbrew/install/master/install' | ruby
 
     # shellcheck disable=SC2016
-    append_to_bashrc 'export PATH="$HOME/.linuxbrew/bin:$PATH"'
+    append_to_shell_rc 'export PATH="$HOME/.linuxbrew/bin:$PATH"'
     # shellcheck disable=SC2016
-    append_to_bashrc 'export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"'
+    append_to_shell_rc 'export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"'
     # shellcheck disable=SC2016
-    append_to_bashrc 'export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"'
+    append_to_shell_rc 'export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"'
 fi
 
 # Languages
@@ -25,15 +34,15 @@ brew install rbenv
 brew install ruby-build
 
 # shellcheck disable=SC2016
-append_to_bashrc 'eval "$(rbenv init -)"'
+append_to_shell_rc 'eval "$(rbenv init -)"'
 
 brew install nvm
 brew install npm
 
 # shellcheck disable=SC2016
-append_to_bashrc 'export NVM_DIR="$HOME/.nvm"'
+append_to_shell_rc 'export NVM_DIR="$HOME/.nvm"'
 # shellcheck disable=SC2016
-append_to_bashrc '  . "$(brew --prefix nvm)/nvm.sh"'
+append_to_shell_rc '  . "$(brew --prefix nvm)/nvm.sh"'
 
 echo 'Setting up Ruby'
 
