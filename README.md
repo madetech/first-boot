@@ -1,4 +1,4 @@
-#First Day
+# First Day
 
 This simple script installs all the software we use day-to-day, and set up our [vagrant-dev](https://github.com/madetech/vagrant-dev) box.
 
@@ -6,7 +6,7 @@ No Editors are included, because we find everyone has a personal preference.
 
 This repository is heavily inspired by [Laptop by thoughtbot](https://github.com/thoughtbot/laptop)
 
-##TODO
+## TODO
 
 - Find way to install Slack, LastPass, and Docker onto Linux
 
